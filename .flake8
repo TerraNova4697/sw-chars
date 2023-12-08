@@ -1,0 +1,8 @@
+[flake8]
+exclude =
+    __pycache__
+    venv/
+    */migrations/*
+ignore =
+    F405
+    F403
