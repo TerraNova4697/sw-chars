@@ -9,12 +9,36 @@ services:
       - .env
     ports:
       - "8000:8000"
+    restart: always
     volumes:
       - ./:/app
       - dev-static-data:/vol/
+    depends_on:
+      - cache
+      - db
     command: >
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
 
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${PG_DB}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+
+  cache:
+    image: redis:7.2.1-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel ${REDIS_LOGLEVEL} --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis-cache:/data
+
 volumes:
   dev-static-data:
+  redis-cache:
+  dev-db-data:

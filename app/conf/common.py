@@ -35,10 +35,12 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'debug_toolbar',
+    'rest_framework',
 ]
 
 APPS = [
     'core',
+    'swchars',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + APPS

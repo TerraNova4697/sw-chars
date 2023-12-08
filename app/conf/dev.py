@@ -23,6 +23,11 @@ DATABASES = {
     }
 }
 
+SW_CACHE = {
+    'host': 'cache',
+    'password': os.environ.get('REDIS_PASSWORD'),
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -37,3 +42,32 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # noqa
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') # noqa
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
+        },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'errors.log'),  # Specify your custom log file path
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['default'],  # Include your custom handler here
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'swchars': {
+            'handlers': ['file'],  # Include your custom handler here
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
