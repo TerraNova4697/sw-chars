@@ -32,16 +32,46 @@ class SWCache(Singleton, SWSource):
             str of rates OR None if does not exist.
         """
         try:
-            return self._redis.get(key)
+            return self._redis.hget(f'chars:{key}', key)
         except Exception as e:
             logger.error(e)
+            return None
 
-    def save_chars(self, key: str, value: str):
+    def save_chars(self, key: str, value: dict):
         """
         Saves given currencies as a key and its rates as value for one hour.
         """
-        hour_in_sec = 60*60*60
-        self._redis.set(name=key, value=value, ex=hour_in_sec)
+        name, ex = f'chars:{key}', 60*10
+        self._redis.hset(name=name, key=key, value=value)
+        self._redis.expire(name, ex)
+
+    def get_item(self, type: str, key: str) -> bytes|None:
+        """Returns bytes representation of item if in cache. None otherwise.
+
+        Args:
+            type (str): Type of item.
+            key (str): ID of item.
+
+        Returns:
+            bytes|None: _description_
+        """
+        try:
+            return self._redis.hget(f'{type}:{key}', key)
+        except Exception as e:
+            logger.error(e)
+            return None
+
+    def save_item(self, type: str, key: str, value: dict):
+        """Save given item in cache.
+
+        Args:
+            type (str): Type of item.
+            key (str): ID of item.
+            value (dict): Dict representation of item.
+        """
+        name, ex = f'{type}:{key}', 60*10
+        self._redis.hset(name=name, key=key, value=value)
+        self._redis.expire(name, ex)
 
     def flush_db(self):
         """
