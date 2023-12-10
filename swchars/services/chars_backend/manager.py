@@ -2,7 +2,6 @@
 Management class for characters operations.
 """
 import json
-import swchars
 
 from swchars.services.chars_backend.api import SWAPI
 from swchars.services.chars_backend.cache import SWCache
@@ -33,7 +32,7 @@ class SWDataManager:
             dict for characters.
         """
         value = self.cache.get_chars(kwargs['page'][0])
-        if value and not kwargs.get('clear_cache'):
+        if value and not kwargs.get('no_cache'):
             value = json.loads(value)
             value['source'] = 'cache'
         else:
@@ -59,10 +58,10 @@ class SWDataManager:
         Returns:
             dict: Dict representation of items info.
         """
-        if kwargs['type'][0] not in self.items_endpoints:
+        if kwargs.get('type', [])[0] not in self.items_endpoints:
             raise ResponseBadRequest
         value = self.cache.get_item(kwargs['type'][0], kwargs['id'][0])
-        if value and not kwargs.get('clear_cache'):
+        if value and not kwargs.get('no_cache'):
             value = json.loads(value)
             value['source'] = 'cache'
         else:

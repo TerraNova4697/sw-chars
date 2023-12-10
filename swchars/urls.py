@@ -4,7 +4,7 @@ URLs for SW chars app.
 from django.urls import path
 from swchars import views
 
-app_name = 'converter'
+app_name = 'swchars' 
 
 urlpatterns = [
     path('chars/', views.SWCharsAPIView.as_view(), name='chars'),

@@ -15,11 +15,15 @@ from swchars.services.singleton import Singleton
 class SWCache(Singleton, SWSource):
     """Redis chache class."""
 
-    def __init__(self):
+    def __init__(self, host: str = None, password = None):
+        if not host:
+            host = settings.SW_CACHE['host']
+        if not password:
+            password = settings.SW_CACHE['password']
         try:
             self._redis = redis.Redis(
-                host=settings.SW_CACHE['host'],
-                password=settings.SW_CACHE['password']
+                host=host,
+                password=password
             )
         except Exception as e:
             logger.error(e)
