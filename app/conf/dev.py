@@ -50,12 +50,12 @@ LOGGING = {
         'default': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
         },
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'errors.log'),  # Specify your custom log file path
+            'filename': os.path.join(BASE_DIR, 'errors.log'),  # Specify your custom log file path
         },
     },
     'loggers': {
