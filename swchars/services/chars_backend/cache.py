@@ -82,3 +82,4 @@ class SWCache(Singleton, SWSource):
         Flush all data in Redis.
         """
         self._redis.flushdb()
+        

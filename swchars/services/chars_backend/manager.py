@@ -22,7 +22,7 @@ class SWDataManager:
             kwargs (dict): possible keys - from, to, value.
         """
         self.api = SWAPI()
-        self.cache = SWCache()
+        # self.cache = SWCache()
 
     def get_chars(self, **kwargs):
         """
@@ -31,14 +31,15 @@ class SWDataManager:
         Returns:
             dict for characters.
         """
-        value = self.cache.get_chars(kwargs['page'][0])
+        # value = self.cache.get_chars(kwargs['page'][0])
+        value = None
         if value and not kwargs.get('no_cache'):
             value = json.loads(value)
             value['source'] = 'cache'
         else:
             value = self.api.get_chars(kwargs['page'][0])
             value['source'] = 'api'
-            self.cache.save_chars(kwargs['page'][0], json.dumps(value))
+            # self.cache.save_chars(kwargs['page'][0], json.dumps(value))
 
         del value['count']
         if value['next']:
@@ -60,13 +61,14 @@ class SWDataManager:
         """
         if kwargs.get('type', [])[0] not in self.items_endpoints:
             raise ResponseBadRequest
-        value = self.cache.get_item(kwargs['type'][0], kwargs['id'][0])
+        value = None
+        # value = self.cache.get_item(kwargs['type'][0], kwargs['id'][0])
         if value and not kwargs.get('no_cache'):
             value = json.loads(value)
             value['source'] = 'cache'
         else:
             value = self.api.get_item(kwargs['type'][0], kwargs['id'][0])
             value['source'] = 'api'
-            self.cache.save_item(kwargs['type'][0], kwargs['id'][0], json.dumps(value))
+            # self.cache.save_item(kwargs['type'][0], kwargs['id'][0], json.dumps(value))
 
         return value

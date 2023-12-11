@@ -1,0 +1,16 @@
+html {
+    min-height: 100vh;
+}
+
+body {
+    background-color: #ccc;
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    min-height: 100vh !important;
+}

@@ -11,3 +11,4 @@ class ResponseBadRequest(APIException):
     status_code = 400
     default_detail = 'Unsupported item type.'
     default_code = 'service_unavailable'
+    
