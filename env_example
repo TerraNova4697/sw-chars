@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+export DEBUG=1
+export SECRET_KEY='my_app'
+export DJANGO_ALLOWED_HOSTS=* localhost 127.0.0.1 [::1]
+export PG_DB='devdb'
+export PG_USER='devuser'
+export PG_PASSWORD='verysecurepassword'
+export REDIS_PASSWORD='eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81'
+export REDIS_LOGLEVEL='warning'
